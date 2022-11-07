@@ -1,15 +1,19 @@
 DELIMITER //
-create trigger tr_insertFacturaDetallada after insert on facturasdetalladas
-for each row begin
-    select @codA=codArticulo,@codP=codProveedor, @fd=codFacturaDetallada,@cf=codFactura from inserted;
-	select @pre=precio from Articulos where codArticulo=@codA and codProveedor=@codP;
-	update facturasdetalladas set precio=@pre where codFacturaDetallada=@fd and codFactura=@cf;
+create trigger tr_insertFacturaDetallada after insert on facturasDetalladas
+for each row 
+begin
+    
+    #ACTUALIZAR TOTAL EN FACTURAS
+    update Facturas set total=total+
+    (NEW.cantidad*(select precio from Articulos where codArticulo=NEW.codArticulo and codProveedor=NEW.codProveedor)) 
+    where Facturas.codFactura=NEW.codFactuara;
+    
+    #DESCONTRAR EL STOCK
+    
+    update Articulos set stock=stock-NEW.cantidad where codArticulo=NEW.codArticulo and codProveedor=NEW.codProveedor;
+    
+    
 end//
 DELIMITER ;
 
-DELIMITER //
-create trigger tr_insertFacturaDetallada after insert on facturasdetalladas
-for each row begin
-select * from inserted;
-end//
-DELIMITER ;
+

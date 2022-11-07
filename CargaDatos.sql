@@ -37,4 +37,3 @@ CALL insertFacturas('cf04','cu04','nc04','444');
 
 CALL insertFacturasDetalladas('cfd01','cf01','cp01','art02',4);
 
-delete from FacturasDetalladas where codFacturaDetallada='cfd01' and codFactuara='cf01'
