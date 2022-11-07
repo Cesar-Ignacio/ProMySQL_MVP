@@ -2,10 +2,12 @@
 #creacion de la base de datos
 create database Ecommerce;
 
-#
+# Tener el FOCO
 use Ecommerce;
 
-# creacion de tablas
+# 	CREACION TABLAS
+
+	#TABLA PROVEEDORES
 
 create table Proveedores
 (
@@ -22,7 +24,9 @@ CONSTRAINT codProPK PRIMARY KEY(codProveedor)
 alter table Proveedores add direccion varchar(20) null;  
 alter table Proveedores add ciudad text null;
 alter table Proveedores add provincia text null;
+alter table Proveedores add estado bool default(true);
 
+	#TABLA ARTICULOS
 
 create table Articulos
 (
@@ -35,7 +39,9 @@ precio real
 alter table Articulos add constraint codArticuloPK PRIMARY KEY(codArticulo,codProveedor) ;
 alter table Articulos add constraint codProveFK FOREIGN KEY(codProveedor) REFERENCES Proveedores(codProveedor);
 alter table Articulos add precio real default(0);
+alter table Articulos add estado bool default(true); 
 
+	#TABLA CLIENTES
 create table Clientes
 (
 Dni varchar(20) not null,
@@ -45,7 +51,10 @@ direccion varchar(20),
 telefono varchar(20) default(111),
 CONSTRAINT dniPK PRIMARY KEY(dni)
 );
+ALTER TABLE Clientes add estado bool default(true);
 
+
+	#TABLA CUENTAS
 create table Cuentas(
 codCuenta varchar(20) not null unique,
 nroCuenta varchar(20) not null unique,
@@ -57,6 +66,7 @@ constraint dniFK FOREIGN KEY(dniCu) references Clientes(Dni),
 constraint codCuNroCueDniPK PRIMARY KEY(codCuenta,nroCuenta,dniCu)
 );
 
+	#TABLA FACTURAS
 create table Facturas
 (
 codFactura varchar(20) not null,
@@ -68,8 +78,8 @@ fecha date default(DATE(now())),
 CONSTRAINT  codCuNroCuDniCuFK FOREIGN KEY(codCuenta,nroCuenta,dniCuenta) references Cuentas(codCuenta,nroCuenta,dniCu),
 CONSTRAINT codFacturaPK PRIMARY KEY(codFactura)
 );
-
-
+	
+    #TABLA FACTURAS DETALLADAS
 create table FacturasDetalladas
 (
 codFacturaDetallada varchar(20) not null,
@@ -84,34 +94,11 @@ constraint codProCodArtFK FOREIGN KEY(codProveedor,codArticulo) REFERENCES Artic
 );
 
 
-SELECT DATE(NOW()) AS fecha, CURDATE() AS fecha2
 
 
--- CREACION DE PROCEDIMIENTOS ALMACENADOS
-
-DELIMITER //
-create PROCEDURE insertProveedores
-(codPro varchar(20),
-razSoc text,
-cuit varchar(20),
-telefono varchar(20),
-contac text,
-direccion text,
-ciudad text,
-provincia text
-)
-begin
-insert into Proveedores(codProveedor,razonSocial,cuit,telefono,contacto,direccion,ciudad,provincia)
-select codPro,razSoc,cuit,telefono,contac,direccion,ciudad,provincia;
-end //
-DELIMITER ;
-
-drop procedure insertProveedores
 
 
-call insertProveedores('cp01','Detoys','147',1547,'Cesar','10','Buenos Aires','Buenos Aires');
 
-select * from Proveedores
 
 
 
