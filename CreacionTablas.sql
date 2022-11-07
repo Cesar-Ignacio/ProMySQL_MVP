@@ -88,10 +88,12 @@ codProveedor varchar(20) not null,
 codArticulo varchar(20) not null,
 cantidad bigint,
 precio real,
-Constraint codFaDcodFPK PRIMARY KEY(codFacturaDetallada),
+Constraint codFaDcodFPK PRIMARY KEY(codFacturaDetallada,codFactuara),
 constraint codFacturaFK FOREIGN KEY(codFactuara) REFERENCES Facturas(codFactura),
 constraint codProCodArtFK FOREIGN KEY(codProveedor,codArticulo) REFERENCES Articulos(codProveedor,codArticulo)
 );
+
+
 
 
 

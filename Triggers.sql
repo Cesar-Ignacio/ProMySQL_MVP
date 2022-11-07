@@ -11,8 +11,8 @@ begin
     #DESCONTRAR EL STOCK
     
     update Articulos set stock=stock-NEW.cantidad where codArticulo=NEW.codArticulo and codProveedor=NEW.codProveedor;
-    
-    
+
+
 end//
 DELIMITER ;
 

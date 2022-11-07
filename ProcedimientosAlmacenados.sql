@@ -91,3 +91,26 @@ end //
 DELIMITER ;
 
 
+DELIMITER //
+
+CREATE PROCEDURE spArticuloContraladorStock
+(
+stock01 int
+)
+begin
+select * from Articulos where stock>stock01;
+end//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE spInversionPorProveedor
+(
+codProveedor01 varchar(20)
+)
+begin
+select pr.razonSocial,codArticulo,stock*precio as "Inversion" from Articulos as ar inner join Proveedores as pr
+on ar.codProveedor=pr.codProveedor
+where ar.codProveedor=codProveedor01;
+end//
+DELIMITER ;
+

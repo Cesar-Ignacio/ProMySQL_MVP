@@ -36,4 +36,7 @@ CALL insertFacturas('cf04','cu04','nc04','444');
 # Insert Factura Detallada
 
 CALL insertFacturasDetalladas('cfd01','cf01','cp01','art02',4);
+CALL insertFacturasDetalladas('cfd02','cf01','cp03','art03',2);
+CALL insertFacturasDetalladas('cfd01','cf03','cp01','art02',2);
+CALL insertFacturasDetalladas('cfd01','cf04','cp02','art05',2);
 
